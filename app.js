@@ -32,4 +32,4 @@ app.get('/landmark', (req,res) => {
 })
 
 
-app.listen(3000, () => console.log('Urbscope Server is Live'))
+app.listen(process.env.PORT || 3000, () => console.log('Urbscope Server is Live'))
