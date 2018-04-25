@@ -8,17 +8,17 @@ app.get('/', (req, res) => res.send('Urbscope 1.0.0'))
 app.get('/landmark', (req,res) => {
 
 	let inLL = req.query.inLL;
-	let inQuery = req.query.inQuery;
+	let inQuery = req.query.inQuery; //why?
 	let inLimit = req.query.inLimit;
-	let inOpenNow = req.query.inOpenNow;
 	let inRadius = req.query.inRadius;
+	let inCat = req.query.inCat;
 
 	if (!inLL){
 		res.status(400);
 		res.json({"error": "Bad Request", message: "missing inLL query parameter"} );
 	}
 	else{
-		landmarkSearch(inLL, inQuery, inLimit, inOpenNow, inRadius, (landmarkErr, landmarkRes)=>{
+		landmarkSearch(inLL, inQuery, inLimit , inRadius, inCat, (landmarkErr, landmarkRes)=>{
 			if (landmarkErr){
 				res.status(400)
 				res.json(landmarkErr)
