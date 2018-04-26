@@ -4,7 +4,7 @@ const landmarkSearch = require('./landmarkSearch');
 
 
 app.set('json spaces', 2);
-app.get('/', (req, res) => res.send('Urbscope 1.0.0'))
+app.get('/', (req, res) => res.send('Urbscope 1.1.0'))
 app.get('/landmark', (req,res) => {
 
 	let inLL = req.query.inLL;
