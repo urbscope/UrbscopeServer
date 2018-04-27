@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const landmarkSearch = require('./landmarkSearch');
+const getPhotos = require('./getPhotos');
 
 
 app.set('json spaces', 2);
@@ -23,7 +24,19 @@ app.get('/landmark', (req,res) => {
 				res.json(landmarkErr)
 			}
 			else if (landmarkRes)
-				res.json(landmarkRes)
+
+				getPhotos(landmarkRes, function(fullErr,fullRes){
+					if (fullErr){
+						res.status(400)
+						res.json(fullErr)
+					}
+					else if(fullRes){
+						res.json(fullRes)
+					}
+					else
+						res.json({})
+				
+				}
 			else
 				res.json({})
 		});
