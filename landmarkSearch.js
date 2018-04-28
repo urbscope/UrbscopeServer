@@ -37,14 +37,8 @@ var getLandmarks = function ( inll, inLimit, inRadius, inCat, callback){
 	    	}
 	    	else {
 	    	for (var i = 0; i < jsonBody.response.venues.length; i++){
-		    		var destData = {};
-		    		destData['destinationID'] = jsonBody.response.venues[i].id;
-		    		destData['name'] = jsonBody.response.venues[i].name;
-		    		destData['latitude'] = jsonBody.response.venues[i].location.lat;
-		    		destData['longitude'] = jsonBody.response.venues[i].location.lng;
-		    		destData['address'] = jsonBody.response.venues[i].location.formattedAddress;
-		    		destData['categoryID'] = jsonBody.response.venues[i].categories[0].id;
-		    		searchResults.landmarks.push(destData);
+		    		
+		    		searchResults.landmarks.push(jsonBody.response.venues[i].id);
 		    	}
 		    	callback(null, searchResults);
 		   	}
