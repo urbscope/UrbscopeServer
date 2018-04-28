@@ -3,7 +3,6 @@ const app = express()
 const landmarkSearch = require('./landmarkSearch');
 const getDetails = require('./getDetails');
 
-
 app.set('json spaces', 2);
 app.get('/', (req, res) => res.send('Urbscope 1.3.0'))
 app.get('/landmark', (req,res) => {
@@ -49,7 +48,7 @@ getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
 };
 
 app.get('/register/:uid', (req,res)=>{
-		uid = req.params.uid;
+	uid = req.params.uid;
 	//TODO: add uid as a new user to the recommender system
 	console.log("New user with uid: ", uid);
 	res.sendStatus(200);
@@ -70,4 +69,4 @@ app.get('/recommend/:uid', (req,res)=>{
 
 })
 
-app.listen(process.env.PORT || 3000, () => console.log('Urbscope Server is Live'))
+app.listen(process.env.PORT || 3000, () => console.log('Urbscope Server is Live'));
