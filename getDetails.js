@@ -62,7 +62,6 @@ var getDetails = async function ( venueRes, callback){
 
 		    	detailsResult.landmarks.push(destData);
 		    	completed++;
-		    	console.log(completed);
 		    	if (completed == venueRes.landmarks.length){
 	    			callback(null, detailsResult);
 		    	}
