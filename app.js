@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
 const landmarkSearch = require('./landmarkSearch');
-const getPhotos = require('./getPhotos');
+const getDetails = require('./getDetails');
 
 
 app.set('json spaces', 2);
-app.get('/', (req, res) => res.send('Urbscope 1.0.0'))
+app.get('/', (req, res) => res.send('Urbscope 1.2.0'))
 app.get('/landmark', (req,res) => {
 
 	let inLL = req.query.inLL;
@@ -23,22 +23,25 @@ app.get('/landmark', (req,res) => {
 				res.status(400)
 				res.json(landmarkErr)
 			}
-			else if (landmarkRes)
-
-				getPhotos(landmarkRes, function(fullErr,fullRes){
+			else if (landmarkRes) {
+				getDetails(landmarkRes, function(fullErr,fullRes){
 					if (fullErr){
-						res.status(400)
-						res.json(fullErr)
+						res.status(400);
+						res.json(fullErr);
 					}
 					else if(fullRes){
-						res.json(fullRes)
+						console.log("success from details");
+						res.json(fullRes);
 					}
-					else
+					else{
 						res.json({})
-				
-				}
-			else
+					}
+				})
+			} 
+			else{
 				res.json({})
+			}
+
 		});
 	}
 })
