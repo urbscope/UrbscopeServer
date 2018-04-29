@@ -54,6 +54,14 @@ app.get('/register/:uid', (req,res)=>{
 	res.sendStatus(200);
 })
 
+app.get('/rate/:uid', (req,res)=>{
+	uid = req.params.uid;
+	categoryID = req.query.categoryID;
+	rating = req.query.rating;
+	//TODO: add rating to the recommender system
+	res.sendStatus(200);
+})
+
 app.get('/recommend/:uid', (req,res)=>{
 	let uid = req.params.uid;
 	let inLL = req.query.inLL;
