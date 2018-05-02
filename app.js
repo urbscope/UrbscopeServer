@@ -8,6 +8,7 @@ const fs = require('fs');
 const exists = require('./helpers/exists');
 const getRecommendations = require('./helpers/getRecommendations');
 const rate = require('./helpers/rate');
+const train = require('./helpers/train');
 
 const USER_DICT_PATH = "./helpers/userIndex.json";
 var userDict = {};
@@ -88,6 +89,21 @@ app.get('/rate/:uid', (req,res)=>{
 	// update rating in the recommender system's files
 	
 	rate(uid,categoryID,rating, userDict)
+		.then( resolve => {
+			console.log( resolve);
+			res.sendStatus(200);
+		}).catch( err => {
+			console.log( "err: " + err)
+			res.status(400);
+			res.json( {error: "Bad Request", message: err});
+		});
+})
+
+app.get('/train', (req,res)=>{
+	
+	// update rating in the recommender system's files
+	
+	train()
 		.then( resolve => {
 			console.log( resolve);
 			res.sendStatus(200);
