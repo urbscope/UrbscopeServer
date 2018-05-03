@@ -37,8 +37,14 @@ function rate(uid, catID, rating, userDict)
 				var startOffset = (userIndex-1) * 2 * COLUMNS + 2 * (catIndex-1);
 				
 				// 3. update the rating value from ratings.csv
-				const file = fs.createWriteStream( RATINGS_PATH, { flags: "r+", start: startOffset });
-				file.end( rating);
+				const readStream = fs.createReadStream( RATINGS_PATH, {start: startOffset, end: startOffset});
+				readStream.on('data', chunk => {
+					// take average of new rating and old rating
+					prevRating = Number(chunk.toString());
+					rating = Math.round( (Number(rating) + prevRating) / 2);
+					const writeStream = fs.createWriteStream( RATINGS_PATH, { flags: "r+", start: startOffset });
+					writeStream.end( String(rating));
+				});
 				
 				// return success
 				resolve("Rating is updated");
