@@ -41,7 +41,7 @@ var getDetails = async function ( venueRes, callback){
 
 		    	let urlStr = null;
 
-		    	if (!jsonBody.response.venue){
+		    	if (!jsonBody || !jsonBody.response || !jsonBody.response.venue){
 		    		completed++;
 		    		return;
 		    	}
