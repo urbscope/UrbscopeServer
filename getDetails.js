@@ -14,7 +14,7 @@ var getDetails = async function ( venueRes, callback){
 	for (var i = 0; i < venueRes.landmarks.length; i++){
 		var inVenueId = (venueRes.landmarks[i])
 	
-		await request({
+		request({
 		    url: `https://api.foursquare.com/v2/venues/${inVenueId}`,
 		    method: 'GET',
 		    qs: {
@@ -26,7 +26,6 @@ var getDetails = async function ( venueRes, callback){
 		}, function (err, res, body) {
 			if (err) {
 		        console.error(err);
-		        callback(new Error('err'))
 		    } 
 		    else {
 
@@ -75,7 +74,7 @@ var getDetails = async function ( venueRes, callback){
 		    	detailsResult.landmarks.push(destData);
 		    	completed++;
 		    	if (completed == venueRes.landmarks.length){
-	    			callback(null, detailsResult);
+	    			callback(detailsResult);
 		    	}
 		    }
 		});

@@ -5,7 +5,7 @@ const getDetails = require('./getDetails');
 const addSponsorInfo = require('./addSponsorInfo');
 
 app.set('json spaces', 2);
-app.get('/', (req, res) => res.send('Urbscope 1.3.0'))
+app.get('/', (req, res) => res.send('Urbscope 1.4.0'))
 app.get('/landmark', (req,res) => {
 
 	let inLL = req.query.inLL;
@@ -25,29 +25,19 @@ app.get('/landmark', (req,res) => {
 
 
 getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
-	let returned = false;
 	landmarkSearch(inLL, inLimit, inRadius, inCat, (landmarkErr, landmarkRes)=>{
-		if (landmarkErr && !returned){
+		if (landmarkErr){
 			console.error("error at landmarkErr");
-			returned = true;
 			res.status(400)
 			res.json(landmarkErr)
 		}
 		else if (landmarkRes) {
-			getDetails(landmarkRes, function(fullErr,fullRes){
-				if (fullErr && !returned){
-					console.error("error at fullErr");
-					returned = true;
-					res.status(400);
-					res.json(fullErr);
-				}
-				else if(fullRes && !returned){
-					returned = true;
+			getDetails(landmarkRes, function(fullRes){
+				if(fullRes){
 					addSponsorInfo(fullRes);
 					res.json(fullRes);
 				}
 				else{
-					console.log("returning empty body")
 					res.json({})
 				}
 			})
@@ -76,17 +66,15 @@ app.get('/rate/:uid', (req,res)=>{
 app.get('/recommend/:uid', (req,res)=>{
 	let uid = req.params.uid;
 	let inLL = req.query.inLL;
-	console.log(uid);
-	console.log(inLL);
 	if (!inLL){
 		res.status(400);
 		res.json({"error": "Bad Request", message: "missing inLL query parameter"} );
 	}
 
 	//TODO: get top 3 categories from recommender system and add set them in array cats
-	let cats = ['4d4b7104d754a06370d81259,56aa371be4b08b9a8d5734db','4fceea171983d5d06c3e9823', '56aa371be4b08b9a8d573532'];
+	let cats = ['4d4b7105d754a06374d81259'];
 	let inCat = cats.join(',');
-	getLandmarksAndDetails(inLL, 10, 1000, inCat, res);	 
+	getLandmarksAndDetails(inLL, 7, 1000, inCat, res);	 
 
 })
 
