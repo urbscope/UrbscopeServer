@@ -28,6 +28,7 @@ getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
 	let returned = false;
 	landmarkSearch(inLL, inLimit, inRadius, inCat, (landmarkErr, landmarkRes)=>{
 		if (landmarkErr && !returned){
+			console.error("error at landmarkErr");
 			returned = true;
 			res.status(400)
 			res.json(landmarkErr)
@@ -35,6 +36,7 @@ getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
 		else if (landmarkRes) {
 			getDetails(landmarkRes, function(fullErr,fullRes){
 				if (fullErr && !returned){
+					console.error("error at fullErr");
 					returned = true;
 					res.status(400);
 					res.json(fullErr);
@@ -45,6 +47,7 @@ getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
 					res.json(fullRes);
 				}
 				else{
+					console.log("returning empty body")
 					res.json({})
 				}
 			})
