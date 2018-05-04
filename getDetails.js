@@ -35,7 +35,9 @@ var getDetails = async function ( venueRes, callback){
 		    	try {
 		    		jsonBody = JSON.parse(body);
 		    	} catch(e) {
-		    		callback(e);
+		    		console.error("error in getDetails, line 38: ", e);
+		    		completed++;
+		    		return;
 		    	}
 		    	
 
