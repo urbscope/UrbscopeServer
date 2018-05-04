@@ -31,9 +31,22 @@ var getDetails = async function ( venueRes, callback){
 		    else {
 
 		    	let destData = {};
-		    	jsonBody = JSON.parse(body);
+		    	console.log(body);
+		    	let jsonBody;
+		    	try {
+		    		jsonBody = JSON.parse(body);
+		    	} catch(e) {
+		    		callback(e);
+		    	}
 		    	
+
 		    	let urlStr = null;
+
+		    	if (!jsonBody.response.venue){
+		    		completed++;
+		    		return;
+		    	}
+
 		    	if (jsonBody.response.venue.photos.count > 0){
 			    	picJson = jsonBody.response.venue.photos.groups[0].items[0];
 			    	data = JSON.stringify(picJson, null, 4);

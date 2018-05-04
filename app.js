@@ -69,6 +69,8 @@ app.get('/rate/:uid', (req,res)=>{
 app.get('/recommend/:uid', (req,res)=>{
 	let uid = req.params.uid;
 	let inLL = req.query.inLL;
+	console.log(uid);
+	console.log(inLL);
 	if (!inLL){
 		res.status(400);
 		res.json({"error": "Bad Request", message: "missing inLL query parameter"} );
