@@ -31,7 +31,6 @@ var getDetails = async function ( venueRes, callback){
 		    else {
 
 		    	let destData = {};
-		    	console.log(body);
 		    	let jsonBody;
 		    	try {
 		    		jsonBody = JSON.parse(body);
