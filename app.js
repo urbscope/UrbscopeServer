@@ -25,18 +25,22 @@ app.get('/landmark', (req,res) => {
 
 
 getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
+	let returned = false;
 	landmarkSearch(inLL, inLimit, inRadius, inCat, (landmarkErr, landmarkRes)=>{
-		if (landmarkErr){
+		if (landmarkErr && !returned){
+			returned = true;
 			res.status(400)
 			res.json(landmarkErr)
 		}
 		else if (landmarkRes) {
 			getDetails(landmarkRes, function(fullErr,fullRes){
-				if (fullErr){
+				if (fullErr && !returned){
+					returned = true;
 					res.status(400);
 					res.json(fullErr);
 				}
-				else if(fullRes){
+				else if(fullRes && !returned){
+					returned = true;
 					addSponsorInfo(fullRes);
 					res.json(fullRes);
 				}
