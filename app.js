@@ -83,16 +83,19 @@ app.get('/register/:uid', (req,res)=>{
 
 app.get('/rate/:uid', (req,res)=>{
 	uid = req.params.uid;
+	landmarkID = req.query.landmarkID;
 	categoryID = req.query.categoryID;
 	rating = req.query.rating;
 	// update rating in the recommender system's files
 	
+				res.sendStatus(200);
+	
 	rate(uid,categoryID,rating, userDict)
 		.then( resolve => {
 			console.log( resolve);
-			res.sendStatus(200);
+
 		}).catch( err => {
-			console.log( "err: " + err)
+			console.error( "err: " + err)
 			res.status(400);
 			res.json( {error: "Bad Request", message: err});
 		});
@@ -107,7 +110,8 @@ app.get('/recommend/:uid', (req,res)=>{
 	}
 
 	console.log("recommend/uid:" + uid);
-	// get top 3 categories from recommender system and add set them in array cats
+	
+	/*// get top 3 categories from recommender system and add set them in array cats
 	getRecommendations( uid, userDict)
 		.then( resolve => {
 			console.log( resolve);
@@ -119,7 +123,7 @@ app.get('/recommend/:uid', (req,res)=>{
 			console.log( err);
 			res.status(400);
 			res.json( {error: "Bad Request", message: err});
-		});
+		});*/
 })
 
 app.listen(process.env.PORT || 3000, () => console.log('Urbscope Server is Live'));
