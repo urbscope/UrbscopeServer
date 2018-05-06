@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const landmarkSearch = require('./landmarkSearch');
 const getDetails = require('./getDetails');
+const addSponsorInfo = require('./addSponsorInfo');
 const fs = require('fs');
 
 // recommender system helper functions
@@ -22,7 +23,7 @@ fs.readFile( USER_DICT_PATH, (err,data) => {
 });
 
 app.set('json spaces', 2);
-app.get('/', (req, res) => res.send('Urbscope 1.3.0'))
+app.get('/', (req, res) => res.send('Urbscope 1.4.0'))
 app.get('/landmark', (req,res) => {
 
 	let inLL = req.query.inLL;
@@ -39,19 +40,19 @@ app.get('/landmark', (req,res) => {
 	getLandmarksAndDetails(inLL, inLimit, inRadius, inCat, res);
 })
 
+
+
 getLandmarksAndDetails = (inLL, inLimit, inRadius, inCat, res)=>{
 	landmarkSearch(inLL, inLimit, inRadius, inCat, (landmarkErr, landmarkRes)=>{
 		if (landmarkErr){
+			console.error("error at landmarkErr");
 			res.status(400)
 			res.json(landmarkErr)
 		}
 		else if (landmarkRes) {
-			getDetails(landmarkRes, function(fullErr,fullRes){
-				if (fullErr){
-					res.status(400);
-					res.json(fullErr);
-				}
-				else if(fullRes){
+			getDetails(landmarkRes, function(fullRes){
+				if(fullRes){
+					addSponsorInfo(fullRes);
 					res.json(fullRes);
 				}
 				else{
