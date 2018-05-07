@@ -4,7 +4,15 @@
 Given latitude and longitude, finds the city they belong to. 
 Requires pip install geocoder 
 '''
-import geocoder
+import pip
+try:
+	import geocoder
+except Exception as e:
+	isSucceeded = pip.main(["install", geocoder])
+	if( not isSucceeded):
+		raise e
+	else:
+		import geocoder
 import os
 import sys
 import time
