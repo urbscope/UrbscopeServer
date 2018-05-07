@@ -17,6 +17,11 @@ function getLandmarkRecommendations( uid, lat, long)
 						if( landmarkIDs == '0')
 							// call to category getRecommendations.js
 							return reject( "No landmark is returned for this user and city");
+						else if( landmarkIDs == '-1')
+						{
+							console.log( "INFO: cannot read csv files");
+							return reject( "No landmark is returned for this user and city");
+						}
 						else
 							return resolve( landmarkIDs);
 					}).catch( err => {

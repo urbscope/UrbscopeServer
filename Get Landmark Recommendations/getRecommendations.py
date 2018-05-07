@@ -1,6 +1,7 @@
 import numpy as np
 from glob import glob as gl
 import sys
+import os
 
 def readMatrix(filename):
 	mat = np.genfromtxt(open(filename, "rb"), dtype=None, delimiter=",", names=True, autostrip=True, case_sensitive=True)
@@ -9,7 +10,12 @@ def readMatrix(filename):
 # Returns the top k destinations for user with uid in this city 
 def getRecommendation(city, uid, k):
 	# path is relative to app.js since this script is called by app.js
-	cities = gl("./Cities/CSV_Files/Trained/*.csv")
+	#cities = gl("./Cities/CSV_Files/Trained/*.csv")
+	path = "./Cities/CSV_Files/Trained/"
+	if os.path.isdir(path) == False:
+		return -1
+	cities = gl(path + "*.csv")
+	
 	found = 0
 	filename = ""
 	for c in cities:
@@ -59,5 +65,10 @@ if __name__ == "__main__":
 		
 		IDs = getRecommendation(cityName, uid, topK)
 		
-		print 0 if IDs == 0 else ','.join(IDs)
+		if IDs == 0:
+			print 0
+		elif IDs == -1:
+			print -1
+		else:
+			print ','.join(IDs)
 		
