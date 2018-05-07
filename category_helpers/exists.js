@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-const RATINGS_PATH = "./helpers/ratings.csv";
-const USER_DICT_PATH = "./helpers/userIndex.json";
+const RATINGS_PATH = "./category_helpers/ratings.csv";
+const USER_DICT_PATH = "./category_helpers/userIndex.json";
 const COLUMNS = 19;
 
 function exists(uid, userDict)
@@ -57,7 +57,7 @@ function exists(uid, userDict)
 }
 
 /*
-// call to the exists function above
+// call to the exists function above --DEPRECATED--
 exists( "vEWYbhty546GFfdQ24dsv")
 	.then( res => {
 		console.log( res);

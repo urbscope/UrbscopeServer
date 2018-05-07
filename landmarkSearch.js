@@ -35,7 +35,7 @@ var getLandmarks = function ( inll, inLimit, inRadius, inCat, callback){
 	    		callback({error: "landmark Search Error", message: meta.errorType + ": " + meta.errorDetail})
 	    	}
 	    	else {
-	    	for (var i = 0; i < jsonBody.response.venues.length; i++){
+	    		for (var i = 0; i < jsonBody.response.venues.length; i++){
 		    		
 		    		searchResults.landmarks.push(jsonBody.response.venues[i].id);
 		    	}

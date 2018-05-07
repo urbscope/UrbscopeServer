@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-const TRAINED_MAT_PATH = "./helpers/trainedMat.csv";
-const CATEGORIES_IND_PATH = "./helpers/categoryIndex.json";
+const TRAINED_MAT_PATH = "./category_helpers/trainedMat.csv";
+const CATEGORIES_IND_PATH = "./category_helpers/categoryIndex.json";
 const K = 3;	// do not set this higher than 19 (number of categories)
 
 var catDict = {};
@@ -36,7 +36,11 @@ var findMaxIndices = (uid, userDict) => {
 			
 			to_string = data.toString();
 			lines = to_string.split('\n');
-			userRatings = lines[userIndex-1].split(',').map(Number);	// 0-based indices in lines
+			userLine = lines[userIndex-1];
+			if( userLine == undefined)
+				return reject( `trainedMat.csv does not contain a row for user ${uid}`);
+			
+			userRatings = userLine.split(',').map(Number);	// 0-based indices in lines
 			
 			var maxIndices = [];
 			// initially index 0 is the iMax (must be set, otherwise starts from index 1)
@@ -52,7 +56,7 @@ var findMaxIndices = (uid, userDict) => {
 };
 
 
-function getRecommendations(uid, userDict)
+function getCategoryRecommendations(uid, userDict)
 {
 	return new Promise( (resolve, reject) => {
 	
@@ -78,8 +82,8 @@ function getRecommendations(uid, userDict)
 }
 
 /*
-// call to the getRecommendations function above
-getRecommendations( "HYvcxzaif231jtdsfa341")
+// call to the getRecommendations function above --DEPRECATED--
+getCategoryRecommendations( "HYvcxzaif231jtdsfa341")
 	.then( res => {
 		console.log( res);
 	}).catch( err => {
@@ -87,4 +91,4 @@ getRecommendations( "HYvcxzaif231jtdsfa341")
 	});
 */
 
-module.exports = getRecommendations; 
+module.exports = getCategoryRecommendations; 

@@ -1,8 +1,8 @@
 var fs = require('fs');
 
-const RATINGS_PATH = "./helpers/ratings.csv";
-const USER_DICT_PATH = "./helpers/userIndex.json";
-const CATEGORIES_IND_PATH = "./helpers/categoryIndex.json";
+const RATINGS_PATH = "./category_helpers/ratings.csv";
+const USER_DICT_PATH = "./category_helpers/userIndex.json";
+const CATEGORIES_IND_PATH = "./category_helpers/categoryIndex.json";
 const COLUMNS = 19;
 
 var catDict = {};
@@ -19,19 +19,25 @@ var readCategories = new Promise( (resolve, reject) => {
 	});	
 });
 
-function rate(uid, catID, rating, userDict)
+function rateCategory(uid, catID, rating, userDict)
 {
 	return new Promise( (resolve, reject) => {
 
 		var userIndex = userDict[uid];
 		if( userIndex == undefined)
 			return reject( "No such user exists.");
+		if( rating < 0 || rating > 5)
+			return reject( "Rating should be in the range [0, 5]");
 			
 		// 2. find the category's index
 		readCategories
 			.then( res2 => {
 				var catKeys = Object.keys(catDict);
-				var catIndex = catKeys.indexOf(catID) + 1;	// index numbers start from 1 in the files
+				var catIndex = catKeys.indexOf(catID);
+				if( catIndex == -1)
+					return reject( `Error at readCategoeris: CategoryID ${catID} is not recognized!`);
+					
+				var catIndex = catIndex + 1;	// index numbers start from 1 in the files
 				
 				// characters(including ',' and '\n') are 2 bytes
 				var startOffset = (userIndex-1) * 2 * COLUMNS + 2 * (catIndex-1);
@@ -47,7 +53,7 @@ function rate(uid, catID, rating, userDict)
 				});
 				
 				// return success
-				resolve("Rating is updated");
+				resolve("Category rating is updated");
 				
 			}).catch( err2 => {
 				return reject( "Error at readCategories: ", err2);
@@ -55,4 +61,4 @@ function rate(uid, catID, rating, userDict)
 	}); // end of promise
 }
 
-module.exports = rate;
+module.exports = rateCategory;

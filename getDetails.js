@@ -25,7 +25,7 @@ var getDetails = async function ( venueRes, callback){
 
 		}, function (err, res, body) {
 			if (err) {
-		        console.error(err);
+		        callback(err);
 		    } 
 		    else {
 
@@ -74,12 +74,11 @@ var getDetails = async function ( venueRes, callback){
 		    	detailsResult.landmarks.push(destData);
 		    	completed++;
 		    	if (completed == venueRes.landmarks.length){
-	    			callback(detailsResult);
+	    			callback(null, detailsResult);
 		    	}
 		    }
 		});
 	}
-
 };
 
 module.exports = getDetails;
