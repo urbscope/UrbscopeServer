@@ -4,7 +4,7 @@ import sys
 import os
 
 def readMatrix(filename):
-	mat = np.genfromtxt(open(filename, "rb"), dtype=None, delimiter=",", names=True, autostrip=True, case_sensitive=True)
+	mat = np.genfromtxt(open(filename, "rb"), dtype=None, encoding=None, delimiter=",", names=True, autostrip=True, case_sensitive=True)
 	return mat
 
 # Returns the top k destinations for user with uid in this city 
