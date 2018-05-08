@@ -86,7 +86,7 @@ app.get('/register/:uid', (req,res)=>{
 			res.sendStatus(200);
 		}).catch( err => {
 			console.error( "err: " + err)
-			res.sendStatus(200);
+			res.sendStatus(400);
 			res.json( {error: "Bad Request", message: err});
 		});
 });
