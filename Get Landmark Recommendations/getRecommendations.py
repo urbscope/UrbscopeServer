@@ -60,7 +60,7 @@ if __name__ == "__main__":
 		sys.exit(1)
 	else:
 		cityName = sys.argv[1]
-		uid = str(sys.argv[2])
+		uid = sys.argv[2]
 		topK = int(sys.argv[3])
 		
 		IDs = getRecommendation(cityName, uid, topK)
