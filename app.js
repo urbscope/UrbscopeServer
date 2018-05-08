@@ -32,6 +32,7 @@ app.get('/landmark', (req,res) => {
 
 	let inLL = req.query.inLL;
 	if (!inLL){
+		console.error( "missing inLL query parameter");
 		res.status(400);
 		res.json({"error": "Bad Request", message: "missing inLL query parameter"} );
 		return;
@@ -86,7 +87,7 @@ app.get('/register/:uid', (req,res)=>{
 			res.sendStatus(200);
 		}).catch( err => {
 			console.error( "err: " + err)
-			res.sendStatus(400);
+			res.status(400);
 			res.json( {error: "Bad Request", message: err});
 		});
 });
@@ -98,12 +99,14 @@ app.get('/rate/:uid', (req,res)=>{
 	let rating = req.query.rating;
 	let inLL = req.query.inLL;
 	if (!uid || !landmarkID || !categoryID || !rating || !inLL) {
+		console.error( "missing some parameters");
 		res.status(400);
 		res.json({"error": "Bad Request", message: "missing some parameters"} );
 		return;
 	}
 	
 	if( userDict[uid] == undefined) {
+		console.error( "No such user exists.");
 		res.status(400);
 		res.json({"error": "Bad Request", message: "No such user exists."} );
 		return;
@@ -130,12 +133,14 @@ app.get('/recommend/:uid', (req,res)=>{
 	let uid = req.params.uid;
 	let inLL = req.query.inLL;
 	if (!inLL){
+		console.error( "missing inLL query parameter");
 		res.status(400);
 		res.json({"error": "Bad Request", message: "missing inLL query parameter"} );
 		return;
 	}
 	
 	if( userDict[uid] == undefined) {
+		console.error( "No such user exists.");
 		res.status(400);
 		res.json({"error": "Bad Request", message: "No such user exists."} );
 		return;
@@ -187,7 +192,7 @@ app.get('/recommend/:uid', (req,res)=>{
 						getLandmarksAndDetails(inLL, 10, 100000, inCat, res);
 						
 					}).catch( err => {
-						console.log( err);
+						console.error( err);
 						res.status(400);
 						res.json( {error: "Bad Request", message: err});
 					});
