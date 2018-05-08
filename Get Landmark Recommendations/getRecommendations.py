@@ -29,7 +29,7 @@ def getRecommendation(city, uid, k):
 		index = 0
 		user_found = 0
 		for user in xrange(len(matrix)):
-			if uid.strip(' \t\n') == matrix[user][0].strip(' \t\n'):
+			if uid.strip(' \t\n') == str(matrix[user][0]).strip(' \t\n'):
 				index = user
 				user_found = 1
 				break
