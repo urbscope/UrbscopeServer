@@ -1,2 +1,5 @@
 node_modules
 category_helpers/userIndex.json
+category_helpers/ratings.csv
+category_helpers/trainedMat.csv
+Cities/**

@@ -12,7 +12,7 @@ function exists(uid, userDict)
 		if( userDict[uid] != undefined)
 			return reject( "UID is not unique!");
 	
-		// add 0-row to rankings matrix
+		// add 0-row to ratings matrix
 		let zeroRow = "";
 		for( i = 0; i < COLUMNS-1; ++i)
 			zeroRow += "0,"
